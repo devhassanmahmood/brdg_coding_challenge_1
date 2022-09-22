@@ -15,7 +15,11 @@ class CopyBaseController < ApplicationController
   end
 
   def refresh
-    Airtable.call
+    data = Airtable.call(false)
+    File.open('latest_copy.json', 'w') do |f|
+      f.write(data)
+    end
+
     render json: {}, status: :ok
   end
 
@@ -56,7 +60,8 @@ class CopyBaseController < ApplicationController
   end
 
   def copy_data_since
-    data = JSON.parse(Airtable.call(false))
-    data['records'] - @copy_data['records']
+    data = JSON.parse(File.read('copy.json'))
+
+    @copy_data['records'] - data['records']
   end
 end

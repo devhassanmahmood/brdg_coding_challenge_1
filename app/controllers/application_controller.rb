@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
 
   private
   def load_copy_data
-    if File.exists?('copy.json')
+    filename = File.exists?('latest_copy.json') ? 'latest_copy.json' : 'copy.json'
+    if File.exists?(filename)
       begin
-        data = File.read('copy.json')
+        data = File.read(filename)
         @copy_data = JSON.parse(data)
       rescue Exception => e 
         puts "Exception: #{e.message}"

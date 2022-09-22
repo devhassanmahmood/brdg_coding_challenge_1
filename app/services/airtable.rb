@@ -8,7 +8,6 @@ class Airtable
 
     request = Net::HTTP::Get.new(url)
     request['Authorization'] = "Bearer #{ENV['AIRTABLE_API_KEY']}"
-
     response = http.request(request)
     body = response.read_body
 
